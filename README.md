@@ -2,11 +2,11 @@
 
 ## Overview
 
-This project is a Currency Converter Application developed in Kotlin using Jetpack Compose for the UI. The application allows users to convert between different currencies using real-time exchange rates fetched from the Fixer.io API. The project demonstrates proficiency in various aspects of Android development, including UI design, third-party library integration, HTTP calls, error handling, and architectural patterns.
+This project is an Inventory Application developed in Kotlin using Jetpack Compose for the UI. The application allows users to track their inventory. The project demonstrates proficiency in various aspects of Android development, including UI design, third-party library integration, HTTP calls, error handling, and architectural patterns.
 
 ## Features
 
-- **Currency Conversion**: Convert between different currencies using real-time exchange rates.
+- **Inventory**: Fetch products, Add, Edit, Delete products. Keep track of stocks.
 - **Material3 Design**: The UI follows Material3 design guidelines for a modern and consistent look.
 - **MVVM Architecture**: The application uses the Model-View-ViewModel (MVVM) architecture to separate concerns and improve maintainability.
 - **Third-Party Libraries**: Utilizes Retrofit for network calls, Room for local data storage, Coroutines for asynchronous programming, and Hilt for dependency injection.
