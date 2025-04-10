@@ -52,7 +52,7 @@ Below is a table showing a GIF of the application in action:
 
 | GIF of the Application                               |
 |------------------------------------------------------|
-| ![SmartInventory App](gifs/smartinventory_gif_1.gif) | 
+| ![SmartInventory App](gifs/smartinventory_gif.gif) | 
 
 
 ## APK
