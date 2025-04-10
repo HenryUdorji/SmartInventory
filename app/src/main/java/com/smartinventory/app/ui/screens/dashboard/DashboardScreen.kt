@@ -15,8 +15,10 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
+import androidx.compose.material.icons.filled.BarChart
 import androidx.compose.material.icons.filled.Inventory
 import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.WarningAmber
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -56,7 +58,8 @@ import com.smartinventory.app.ui.components.StockPieChart
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DashboardScreen(
-    onNavigateToAddItem: () -> Unit,
+    onNavigateToItems: () -> Unit,
+    onNavigateToReports: () -> Unit,
     viewModel: DashboardViewModel = hiltViewModel()
 ) {
     val dashboardState by viewModel.dashboardState.collectAsState()
@@ -71,10 +74,16 @@ fun DashboardScreen(
             TopAppBar(
                 title = { Text("Dashboard") },
                 actions = {
-                    IconButton(onClick = { viewModel.refreshData() }) {
+                    IconButton(onClick = { viewModel.fetchData(true) }) {
                         Icon(
                             imageVector = Icons.Default.Refresh,
                             contentDescription = "Refresh"
+                        )
+                    }
+                    IconButton(onClick = { onNavigateToReports() }) {
+                        Icon(
+                            imageVector = Icons.Default.BarChart,
+                            contentDescription = "Report"
                         )
                     }
                 }
@@ -85,7 +94,7 @@ fun DashboardScreen(
             }
         },
         floatingActionButton = {
-            FloatingActionButton(onClick = onNavigateToAddItem) {
+            FloatingActionButton(onClick = onNavigateToItems) {
                 Icon(
                     imageVector = Icons.Default.AddCircle,
                     contentDescription = "Add Item"

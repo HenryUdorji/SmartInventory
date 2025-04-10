@@ -54,8 +54,12 @@ class ItemRepositoryImpl @Inject constructor(
         logActivity(item.id, "DELETE", "Deleted item: ${item.name}")
     }
 
-    override suspend fun refreshItems() = withContext(ioDispatcher) {
+    override suspend fun fetchItems(forceRefresh: Boolean) = withContext(ioDispatcher) {
         try {
+            if (!forceRefresh && itemDao.getItemCount() > 0) {
+                return@withContext // Use cached data if not forcing refresh
+            }
+
             val response = productApi.getAllProducts()
             val items = response.products.map { DataMapper.mapProductDtoToItem(it) }
             val entities = items.map { DataMapper.mapItemToEntity(it) }

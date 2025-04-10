@@ -1,3 +1,6 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -7,6 +10,10 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.kotlinx.serialization)
 }
+
+val localPropertiesFile = rootProject.file("local.properties")
+val localProperties = Properties()
+localProperties.load(FileInputStream(localPropertiesFile))
 
 android {
     namespace = "com.smartinventory.app"
@@ -25,13 +32,25 @@ android {
         }
     }
 
+    signingConfigs {
+        create("release") {
+            keyAlias = "${localProperties["SIGNING_KEY_ALIAS"]}"
+            keyPassword = "${localProperties["SIGNING_KEY_PASSWORD"]}"
+            storeFile = file("${localProperties["SIGNING_JKS_FILE_PATH"]}")
+            storePassword = "${localProperties["SIGNING_KEYSTORE_PASSWORD"]}"
+        }
+    }
+
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("release")
+            isDebuggable = false
         }
     }
     compileOptions {
@@ -43,9 +62,6 @@ android {
     }
     buildFeatures {
         compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
     }
     packaging {
         resources {

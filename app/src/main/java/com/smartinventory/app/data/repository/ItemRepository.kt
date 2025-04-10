@@ -1,5 +1,6 @@
 package com.smartinventory.app.data.repository
 
+import com.smartinventory.app.data.local.entity.ActivityLogEntity
 import com.smartinventory.app.data.model.CategoryQuantity
 import com.smartinventory.app.data.model.Item
 import kotlinx.coroutines.flow.Flow
@@ -19,7 +20,7 @@ interface ItemRepository {
 
     suspend fun deleteItem(item: Item)
 
-    suspend fun refreshItems()
+    suspend fun fetchItems(forceRefresh: Boolean = false)
 
     fun getTotalItemCount(): Flow<Int>
 

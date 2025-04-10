@@ -55,13 +55,13 @@ class DashboardViewModel @Inject constructor(
     )
 
     init {
-        refreshData()
+        fetchData()
     }
 
-    fun refreshData() {
+    fun fetchData(forceRefresh: Boolean = false) {
         viewModelScope.launch {
             _isLoading.value = true
-            itemRepository.refreshItems()
+            itemRepository.fetchItems()
             _isLoading.value = false
         }
     }

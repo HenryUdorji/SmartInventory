@@ -18,5 +18,7 @@ data class Item(
     val category: String,
     val imageUrl: String,
     val supplierInfo: String? = "",
+    val supplierName: String? = "",
+    val supplierContact: String? = "",
     val lastUpdated: Date = Date()
 ) : Parcelable

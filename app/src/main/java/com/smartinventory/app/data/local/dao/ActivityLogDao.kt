@@ -17,4 +17,7 @@ interface ActivityLogDao {
 
     @Query("SELECT * FROM activity_logs ORDER BY timestamp DESC LIMIT :limit")
     fun getRecentLogs(limit: Int = 10): Flow<List<ActivityLogEntity>>
+
+    @Query("SELECT * FROM activity_logs")
+    fun getAllLogs(): Flow<List<ActivityLogEntity>>
 }

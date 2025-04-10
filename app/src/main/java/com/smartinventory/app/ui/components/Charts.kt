@@ -1,6 +1,5 @@
 package com.smartinventory.app.ui.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -13,16 +12,16 @@ import androidx.compose.ui.unit.sp
 import co.yml.charts.axis.AxisData
 import co.yml.charts.axis.DataCategoryOptions
 import co.yml.charts.common.model.PlotType
-import co.yml.charts.common.model.Point
 import co.yml.charts.common.utils.DataUtils
 import co.yml.charts.ui.barchart.BarChart
 import co.yml.charts.ui.barchart.models.BarChartData
 import co.yml.charts.ui.barchart.models.BarChartType
-import co.yml.charts.ui.barchart.models.BarData
+import co.yml.charts.ui.barchart.models.BarStyle
 import co.yml.charts.ui.piechart.charts.PieChart
 import co.yml.charts.ui.piechart.models.PieChartConfig
 import co.yml.charts.ui.piechart.models.PieChartData
 import com.smartinventory.app.data.model.CategoryQuantity
+import com.smartinventory.app.data.model.ChartDataPoint
 import kotlin.math.absoluteValue
 
 /**
@@ -43,7 +42,7 @@ fun CategoryBarChart(categoryData: List<CategoryQuantity>) {
     val xAxisData = AxisData.Builder()
         .axisStepSize(30.dp)
         .steps(categoryData.size)
-        .labelData { i -> barData.getOrNull(i)?.label ?: "" }
+        .labelData { i -> categoryData[i].category }
         .labelAndAxisLinePadding(4.dp)
         .axisLineColor(MaterialTheme.colorScheme.onBackground)
         .axisLabelColor(MaterialTheme.colorScheme.onBackground)
@@ -61,14 +60,16 @@ fun CategoryBarChart(categoryData: List<CategoryQuantity>) {
         chartData = barData,
         yAxisData = yAxisData,
         xAxisData = xAxisData,
-        backgroundColor = MaterialTheme.colorScheme.background
+        backgroundColor = MaterialTheme.colorScheme.background,
+        barStyle = BarStyle(paddingBetweenBars = 35.dp),
+        barChartType = BarChartType.VERTICAL
     )
 
     BarChart(
         modifier = Modifier
             .fillMaxWidth()
             .height(400.dp)
-            .padding(16.dp),
+            .padding(10.dp),
         barChartData = barChartData
     )
 }
@@ -103,6 +104,43 @@ fun StockPieChart(inStock: Int, lowStock: Int, outOfStock: Int) {
         pieChartData = pieChartData,
         pieChartConfig = pieChartConfig
     )
+}
+
+@Composable
+fun CustomPieChart(categoryData: List<CategoryQuantity>) {
+    val pieChartData = PieChartData(
+        slices = categoryData.map { PieChartData.Slice(it.category, it.totalQuantity.toFloat(), generateColorForCategory(it.category)) },
+        plotType = PlotType.Pie
+    )
+
+    val pieChartConfig = PieChartConfig(
+        showSliceLabels = true,
+        labelVisible = true,
+        labelType = PieChartConfig.LabelType.PERCENTAGE,
+        isAnimationEnable = true,
+        chartPadding = 20,
+        labelFontSize = 14.sp,
+        backgroundColor = MaterialTheme.colorScheme.background
+    )
+
+    PieChart(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(300.dp)
+            .padding(16.dp),
+        pieChartData = pieChartData,
+        pieChartConfig = pieChartConfig
+    )
+}
+
+@Composable
+fun CustomBarChart(chartData: List<ChartDataPoint>) {
+    CategoryBarChart(categoryData = chartData.map { CategoryQuantity(it.label, it.value.toInt()) })
+}
+
+@Composable
+fun CustomLineChart(categoryData: List<ChartDataPoint>) {
+
 }
 
 // Helper function to generate colors for categories

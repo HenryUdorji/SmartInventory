@@ -45,4 +45,7 @@ interface ItemDao {
 
     @Query("SELECT SUM(quantity) as totalQuantity, category FROM items GROUP BY category")
     fun getQuantityByCategory(): Flow<List<CategoryQuantity>>
+
+    @Query("SELECT COUNT(*) FROM items")
+    fun getItemCount(): Int
 }

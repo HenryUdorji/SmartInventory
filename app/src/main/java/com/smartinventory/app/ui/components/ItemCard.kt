@@ -21,11 +21,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.smartinventory.app.R
 import com.smartinventory.app.data.model.Item
+import com.smartinventory.app.utils.Utils
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -78,7 +81,7 @@ fun ItemCard(
                 Spacer(modifier = Modifier.height(4.dp))
 
                 Text(
-                    text = "$${item.price}",
+                    text = "${stringResource(id = R.string.naira_sign)}${Utils.formatAmount(item.price)}",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.primary
                 )

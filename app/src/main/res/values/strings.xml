@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">SmartInventory</string>
+    <string name="naira_sign">₦</string>
 </resources>
